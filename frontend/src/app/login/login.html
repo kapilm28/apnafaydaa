@@ -1,0 +1,62 @@
+<!-- Contact Start -->
+<div class="container-fluid contact bg-light">
+<div class="container py-5">
+<div class="row g-5">
+<div class="login-container">
+    <!-- Illustration -->
+    <div class="row g-5">
+    <div class="illustration col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+        <img src="assets/img/login.png" alt="Login Illustration" />
+    </div>
+    <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
+        <h3 class="text-center mb-3">Welcome Back 👋</h3>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Username -->
+        <div class="mb-3 form-floating">
+            <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Email"
+            formControlName="email"
+            />
+            <label for="email">Enter Email</label>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3 position-relative  form-floating">
+            <input
+            [type]="showPassword ? 'text' : 'password'"
+            class="form-control"
+            placeholder="Enter Password"
+            formControlName="password"
+            />
+            <span
+            class="toggle-password"
+            (click)="showPassword = !showPassword"
+            >
+            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </span>
+            <label for="password">Enter Password</label>
+        </div>
+
+        <!-- Login Button -->
+        <button
+            type="submit"
+            class="btn btn-primary w-100"
+            [disabled]="loginForm.invalid"
+        >
+            Login
+        </button>
+
+        <!-- Links -->
+        <div class="d-flex justify-content-between mt-3">
+           <a routerLink="/forgetpassword" class="text-decoration-none">Forgot Password?</a>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Contact End -->

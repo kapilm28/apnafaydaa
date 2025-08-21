@@ -1,0 +1,31 @@
+<!-- Contact Start -->
+<div class="container-fluid contact bg-light">
+<div class="container py-5">
+<div class="row g-5">
+<div class="login-container">
+    <!-- Illustration -->
+    <div class="row g-5">
+    <div class="illustration col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+        <img src="assets/img/login.png" alt="Login Illustration" />
+    </div>
+    <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
+        <h3 class="text-center mb-3">Enter OTP</h3>
+        <form [formGroup]="otpForm" (ngSubmit)="verifyOTP()">
+        <!-- Username -->
+        <div class="mb-3 form-floating">
+            <input type="text" class="form-control" formControlName="otp" placeholder="Enter OTP" required />
+            <label for="email">Enter OTP</label>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="btn btn-primary w-100" [disabled]="otpForm.invalid">Verify OTP</button>
+        </form>
+        <p class="mt-2 text-danger">{{ message }}</p>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Contact End -->
+

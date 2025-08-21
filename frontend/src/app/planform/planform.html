@@ -1,0 +1,192 @@
+<!-- Header Start -->
+    <div class="container-fluid bg-breadcrumb">
+        <div class="container text-center py-5" style="max-width: 900px;">
+            <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">{{plan?.plan_name}}</h4>
+            <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active text-primary">Accident Insurance</li>
+            </ol>    
+        </div>
+    </div>
+<!-- Header End -->
+
+
+<!-- Contact Start -->
+    <div class="container-fluid contact bg-light">
+        <div class="container py-5">
+            <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+                <h4 class="text-primary">{{plan?.plan_name}}</h4>
+                <p class="mb-0">{{plan?.description}}</p>
+            </div>
+            <div class="row g-5">
+                <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+                    <div class="contact-img d-flex justify-content-center" >
+                        <div class="contact-img-inner">
+                            <img src="assets/img/insurance.png" class="img-fluid w-100"  alt="Image">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
+                    <div>
+                        <form [formGroup]="planForm" (ngSubmit)="handlePaymentStart($event)">
+                            <div class="row g-3">
+                                <div class="col-lg-12">
+                                <div class="form-floating">
+                                    <input type="text" formControlName="firstname" class="form-control border-0" id="first_name" placeholder="First Name">
+                                    <label for="first_name">First Name</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                <div class="form-floating">
+                                    <input type="text" formControlName="lastname" class="form-control border-0" id="last_name" placeholder="Last Name">
+                                    <label for="last_name">Last Name</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                <div class="form-floating">
+                                    <input type="date" formControlName="dob" class="form-control border-0" id="dob" placeholder="Birthdate">
+                                    <label for="dob">Birthdate</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                <div class="form-floating">
+                                    <input type="number" formControlName="age" class="form-control border-0" id="age" placeholder="Age">
+                                    <label for="age">Age</label>
+                                </div>
+                                <small class="text-danger" *ngIf="isAgeInvalid">
+                                    Age must be between 18 and 60 years
+                                </small>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="email" formControlName="email" class="form-control border-0" id="email" placeholder="Email Address">
+                                    <label for="email">Email Address</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="number" formControlName="mobile" class="form-control border-0" id="mobile" placeholder="Mobile Number">
+                                    <label for="mobile">Mobile Number</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="text" formControlName="username" class="form-control border-0" id="username" placeholder="Username">
+                                    <label for="username">Username</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="password" formControlName="password" class="form-control border-0" id="password" placeholder="Password">
+                                    <label for="password">Password</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                <div class="form-floating">
+                                    <input type="text" formControlName="pan_number" class="form-control border-0" id="pan_number" placeholder="Pan Number">
+                                    <label for="pan_number">Pan Number</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="file" name="pan_photo" (change)="onFileChange($event, 'pan')" class="form-control border-0"  />
+                                    <label for="pan_photo">PAN Photo</label>
+                                </div>
+                                </div>
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">                                    
+                                    <img *ngIf="previewPan" [src]="previewPan" alt="PAN Preview" style="width: 100%;" />
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">                                    
+                                    <input type="number" formControlName="annual_income" class="form-control border-0" id="annual_income" placeholder="Annual Income">
+                                    <label for="annual_income">Annual Income</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="text" formControlName="aadhaar_number" class="form-control border-0" id="aadhaar_number" placeholder="Aadhaar Number">
+                                    <label for="aadhaar_number">Aadhaar Number</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="file" (change)="onFileChange($event, 'aadhaar_front')" class="form-control border-0" />
+                                    <label for="aadhaar_front">Aadhaar Front</label>
+                                </div>
+                                </div>
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">                                    
+                                    <img *ngIf="previewAadhaarFront" [src]="previewAadhaarFront" alt="Aadhaar Front" style="width: 100%;" />
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="file" (change)="onFileChange($event, 'aadhaar_back')" class="form-control border-0" />
+                                    <label for="aadhaar_back">Aadhaar Back</label>
+                                </div>
+                                </div>
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">                                    
+                                    <img *ngIf="previewAadhaarBack" [src]="previewAadhaarBack" alt="Aadhaar Back" style="width: 100%;" />
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="text" formControlName="nominee_name" class="form-control border-0" id="nominee_name" placeholder="Nominee Name">
+                                    <label for="nominee_name">Nominee Name</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12 col-xl-6">
+                                <div class="form-floating">
+                                    <input type="date" formControlName="nominee_dob" class="form-control border-0" id="nominee_birthdate" placeholder="Nominee Birthdate">
+                                    <label for="nominee_birthdate">Nominee Birthdate</label>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                <div class="form-floating">
+                                    <select formControlName="nominee_relation" id="nominee_relation" class="form-select border-0">
+                                    <option value="">Select</option>
+                                    <option value="Brother">Brother</option>
+                                    <option value="Father">Father</option>
+                                    <option value="Mother">Mother</option>
+                                    <option value="Spouse">Spouse</option>
+                                    <option value="Son">Son</option>
+                                    <option value="Daughter">Daughter</option>
+                                    <!-- etc -->
+                                    </select>
+                                    <label for="nominee_relation">Relationship with nominee</label>
+                                </div>
+                                </div>
+
+                                <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" [disabled]="planForm.invalid || isAgeInvalid">
+                                    Proceed to Pay ₹{{plan?.price}}
+                                </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Contact End -->

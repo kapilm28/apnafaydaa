@@ -1,0 +1,28 @@
+.login-container {
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  gap: 3rem;
+  padding: 20px;
+}
+
+toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.illustration img {
+  max-width: 400px;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+  .illustration img {
+    max-width: 250px;
+    margin-top: 20px;
+  }
+}
