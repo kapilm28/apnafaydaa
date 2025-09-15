@@ -1,35 +1,53 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { JsonPipe, NgFor } from '@angular/common';
+import { JsonPipe, NgFor, KeyValuePipe } from '@angular/common';
 import{ InsuranceService } from '../insurance-service';
 import { RouterLink } from '@angular/router';
+
+interface InsurancePlan {
+  id: number;              // 👈 add this
+  plan_name: string;
+  description?: string;
+  price: number
+}
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [JsonPipe,NgFor, RouterLink],
+  imports: [JsonPipe,NgFor, RouterLink, KeyValuePipe],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
 
-    protected readonly title = signal('frontend');
+     protected readonly title = signal('frontend');
 
-      constructor(private InsuranceService:InsuranceService){}
+      constructor(private insuranceService: InsuranceService) {}
 
-      insuranceplan: any;
+  insuranceplan: InsurancePlan[] = [];  
+  groupedPlans: Record<string, InsurancePlan[]> = {};
 
-      ngOnInit(): void {
+  groupByPlanName() {
+    this.groupedPlans = {};
 
-        this.InsuranceService.getplan().subscribe({
-          next:(data) => {
-            this.insuranceplan = data;
-            console.log(data) 
-          },
-          error: (error) => {
-            console.error('Error:',error)
-          }
-        })
-        
+    this.insuranceplan.forEach((plan: InsurancePlan) => {
+      const key = plan.plan_name;
+      if (!this.groupedPlans[key]) {
+        this.groupedPlans[key] = [];
       }
+      this.groupedPlans[key].push(plan);
+    });
+  }
 
+  ngOnInit(): void {
+    this.insuranceService.getplan().subscribe({
+      next: (data: InsurancePlan[]) => {
+        this.insuranceplan = data;
+        this.groupByPlanName();   // ✅ group after data is received
+        console.log('Grouped:', this.groupedPlans);
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
+  }
 }

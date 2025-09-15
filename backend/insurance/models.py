@@ -96,3 +96,31 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"{self.user.email} - {self.txnid} - {self.status}"
+
+from django.contrib.auth import get_user_model
+import uuid
+
+User = get_user_model()
+
+class Payment(models.Model):
+    STATUS_CHOICES = [
+        ('PENDING','Pending'),
+        ('PAID','Paid'),
+        ('FAILED','Failed'),
+    ]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    vpa = models.CharField(max_length=128)  # vendor UPI ID e.g. kmeghnani28@okhdfcbank
+    payer_name = models.CharField(max_length=128, blank=True)  # optional
+    note = models.CharField(max_length=255, blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    upi_link = models.TextField(blank=True)  # upi: link used / saved for QR
+    qr_base64 = models.TextField(blank=True) # store QR as base64 PNG
+    txn_id = models.CharField(max_length=128, blank=True)  # txn ref supplied by payer
+    paid_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Payment({self.id}) {self.amount} {self.status}"

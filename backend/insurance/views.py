@@ -37,6 +37,81 @@ import hashlib
 
 from django.conf import settings
 
+from .models import Payment
+from .serializers import PaymentSerializer
+import qrcode
+import io
+import base64
+from django.utils import timezone
+from decimal import Decimal
+from django.views import View
+
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.http import JsonResponse
+import json
+
+@method_decorator(csrf_exempt, name="dispatch")
+class InitiatePaymentView(View):
+    def post(self, request, *args, **kwargs):
+        data = {}
+
+        try:
+            # First try form-data
+            if request.POST:
+                data = request.POST.dict()
+
+            # If still empty, parse JSON
+            if not data:
+                body_unicode = request.body.decode("utf-8")
+                if body_unicode:
+                    data = json.loads(body_unicode)
+            
+            print("🔹 Final data parsed:", data)
+
+        except Exception as e:
+            return JsonResponse({"error": f"Invalid request body: {str(e)}"}, status=400)
+
+        # ✅ Now extract safely
+        amount = data.get("amount")
+        upi_id = data.get("upi_id", "kmeghnani28@okhdfcbank")
+        name = data.get("name", "Kapil Meghnani")
+
+        if amount is None or amount == "":
+            return JsonResponse({"error": "Amount is required"}, status=400)
+
+        # Build UPI URL
+        upi_url = f"upi://pay?pa={upi_id}&pn={name}&am={amount}&cu=INR"
+
+        return JsonResponse({
+            "upi_url": upi_url,
+            "qr_code": f"https://api.qrserver.com/v1/create-qr-code/?data={upi_url}&size=200x200"
+        })
+
+class SubmitTxnView(View):
+    def post(self, request, pk, *args, **kwargs):
+        data = request.POST or request.data
+        utr = data.get("utr")
+
+        try:
+            txn = Transaction.objects.get(id=pk)
+            txn.utr = utr
+            txn.status = "submitted"
+            txn.save()
+            return JsonResponse({"message": "Transaction submitted, pending admin verification"})
+        except Transaction.DoesNotExist:
+            return JsonResponse({"error": "Transaction not found"}, status=404)
+
+
+class AdminMarkPaidView(View):
+    def post(self, request, pk, *args, **kwargs):
+        try:
+            txn = Transaction.objects.get(id=pk)
+            txn.status = "paid"
+            txn.save()
+            return JsonResponse({"message": "Transaction marked as paid"})
+        except Transaction.DoesNotExist:
+            return JsonResponse({"error": "Transaction not found"}, status=404)
 
 # Create your views here.
 

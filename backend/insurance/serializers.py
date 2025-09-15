@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser,InsurancePlan,Transaction
+from .models import CustomUser,InsurancePlan,Transaction,Payment
 import smtplib
 import ssl
 from email.message import EmailMessage
@@ -85,3 +85,10 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = '__all__'
         read_only_fields = ['txnid', 'status', 'created_at', 'user']
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'
+        read_only_fields = ('id','status','created_at','updated_at','upi_link','qr_base64')
+

@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (     
     initiate_payment,payu_success,payu_failure,Insurance_plans,Insurance_plan_detail,UserProfileView, 
-    MyTokenObtainPairView,OTPRequestView,OTPVerifyView,ResetPasswordView,get_csrf_token, home
+    MyTokenObtainPairView,OTPRequestView,OTPVerifyView,ResetPasswordView,get_csrf_token,InitiatePaymentView, SubmitTxnView, AdminMarkPaidView, home
 )
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -22,4 +22,7 @@ urlpatterns = [
     path('api/otp-verify/', OTPVerifyView.as_view(), name='otp-verify'),
     path('api/get-csrf-token/', get_csrf_token),
     path('api/reset-password/', ResetPasswordView.as_view(), name='reset-password'),
+    path('initiate/', InitiatePaymentView.as_view(), name='initiate-payment'),
+    path('submit-txn/<uuid:pk>/', SubmitTxnView.as_view(), name='submit-txn'),
+    path('admin-mark-paid/<uuid:pk>/', AdminMarkPaidView.as_view(), name='admin-mark-paid'),
 ]

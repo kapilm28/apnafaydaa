@@ -183,6 +183,14 @@
                                 </div>
                             </div>
                         </form>
+                        <!-- Show UPI Payment -->
+                        <div *ngIf="qrCodeUrl">
+                        <h3>Scan & Pay with UPI</h3>
+                        <img [src]="qrCodeUrl" alt="UPI QR" width="200" height="200">
+                        <p *ngIf="upiUrl">
+                            <a [href]="upiUrl">Pay using Google Pay / PhonePe</a>
+                        </p>
+                        </div>
 
                     </div>
                 </div>
