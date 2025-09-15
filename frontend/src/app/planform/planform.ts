@@ -181,45 +181,6 @@ export class Planform implements OnInit {
     return age && (age < 18 || age > 60);
   }
 
-  handlePaymentStart(event: Event) {
-    event.preventDefault();
-
-    if (this.planForm.invalid || this.isAgeInvalid) {
-      console.warn("Form invalid or age invalid");
-      return;
-    }
-
-    this.http.post<any>(
-      "http://127.0.0.1:8000/initiate/",
-      {
-        amount: 500,
-        upi_id: "kmeghnani28@okhdfcbank",
-        name: "Kapil Meghnani",
-      },
-      {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",   // 👈 force JSON
-        }),
-      }
-    ).subscribe({
-      next: (upiData) => {
-        console.log("✅ UPI Data received:", upiData);
-
-        const qrImg = document.createElement("img");
-        qrImg.src = upiData.qr_code;
-        qrImg.style.width = "200px";
-        qrImg.style.height = "200px";
-        document.body.appendChild(qrImg);
-
-        window.location.href = upiData.upi_url; // works only on mobile with UPI app
-      },
-      error: (err) => {
-        console.error("❌ UPI Payment initiation failed:", err);
-      },
-    });
-
-  }
-
   // handlePaymentStart(event: Event) {
   //   event.preventDefault();
 
@@ -228,57 +189,96 @@ export class Planform implements OnInit {
   //     return;
   //   }
 
-  //   const formData = new FormData();
-
-  //   // ✅ append text fields from form
-  //   Object.entries(this.planForm.value).forEach(([key, value]) => {
-  //     if (value !== null && value !== undefined) {
-  //       formData.append(key, value as any);
+  //   this.http.post<any>(
+  //     "http://127.0.0.1:8000/initiate/",
+  //     {
+  //       amount: 500,
+  //       upi_id: "kmeghnani28@okhdfcbank",
+  //       name: "Kapil Meghnani",
+  //     },
+  //     {
+  //       headers: new HttpHeaders({
+  //         "Content-Type": "application/json",   // 👈 force JSON
+  //       }),
   //     }
-  //   });
+  //   ).subscribe({
+  //     next: (upiData) => {
+  //       console.log("✅ UPI Data received:", upiData);
 
-  //   // ✅ append file fields
-  //   if (this.panFile) formData.append('pan_photo', this.panFile);
-  //   if (this.aadhaarFrontFile) formData.append('aadhaar_front_photo', this.aadhaarFrontFile);
-  //   if (this.aadhaarBackFile) formData.append('aadhaar_back_photo', this.aadhaarBackFile);
+  //       const qrImg = document.createElement("img");
+  //       qrImg.src = upiData.qr_code;
+  //       qrImg.style.width = "200px";
+  //       qrImg.style.height = "200px";
+  //       document.body.appendChild(qrImg);
 
-  //   // ✅ append plan id
-  //   formData.append('plan_id', this.plan.id);
-
-  //   // 🔍 Debug log (show exactly what is sent)
-  //   for (let [key, val] of formData.entries()) {
-  //     console.log(`${key}:`, val);
-  //   }
-
-  //   // ✅ send to backend
-  //   this.http.post<any>('http://127.0.0.1:8000/api/initiate-payment/', formData, {
-  //     headers: new HttpHeaders({}) // keeps content-type = multipart/form-data
-  //   }).subscribe({
-  //     next: (payuData) => {
-  //       console.log("PayU data received:", payuData);
-
-  //       // ✅ dynamically build form and auto-submit to PayU
-  //       const form = document.createElement('form');
-  //       form.method = 'POST';
-  //       form.action = 'https://test.payu.in/_payment';
-
-  //       for (const key in payuData) {
-  //         if (payuData.hasOwnProperty(key)) {
-  //           const input = document.createElement('input');
-  //           input.type = 'hidden';
-  //           input.name = key;
-  //           input.value = payuData[key];
-  //           form.appendChild(input);
-  //         }
-  //       }
-
-  //       document.body.appendChild(form);
-  //       form.submit();
+  //       window.location.href = upiData.upi_url; // works only on mobile with UPI app
   //     },
   //     error: (err) => {
-  //       console.error("❌ Payment initiation failed:", err);
-  //     }
-  //   });    
+  //       console.error("❌ UPI Payment initiation failed:", err);
+  //     },
+  //   });
 
   // }
+
+  handlePaymentStart(event: Event) {
+    event.preventDefault();
+
+    if (this.planForm.invalid || this.isAgeInvalid) {
+      console.warn("Form invalid or age invalid");
+      return;
+    }
+
+    const formData = new FormData();
+
+    // ✅ append text fields from form
+    Object.entries(this.planForm.value).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value as any);
+      }
+    });
+
+    // ✅ append file fields
+    if (this.panFile) formData.append('pan_photo', this.panFile);
+    if (this.aadhaarFrontFile) formData.append('aadhaar_front_photo', this.aadhaarFrontFile);
+    if (this.aadhaarBackFile) formData.append('aadhaar_back_photo', this.aadhaarBackFile);
+
+    // ✅ append plan id
+    formData.append('plan_id', this.plan.id);
+
+    // 🔍 Debug log (show exactly what is sent)
+    for (let [key, val] of formData.entries()) {
+      console.log(`${key}:`, val);
+    }
+
+    // ✅ send to backend
+    this.http.post<any>('http://127.0.0.1:8000/api/initiate-payment/', formData, {
+      headers: new HttpHeaders({}) // keeps content-type = multipart/form-data
+    }).subscribe({
+      next: (payuData) => {
+        console.log("PayU data received:", payuData);
+
+        // ✅ dynamically build form and auto-submit to PayU
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'https://test.payu.in/_payment';
+
+        for (const key in payuData) {
+          if (payuData.hasOwnProperty(key)) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = payuData[key];
+            form.appendChild(input);
+          }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+      },
+      error: (err) => {
+        console.error("❌ Payment initiation failed:", err);
+      }
+    });    
+
+  }
 }
