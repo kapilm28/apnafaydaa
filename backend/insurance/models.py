@@ -124,3 +124,18 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"Payment({self.id}) {self.amount} {self.status}"
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.email}"
+
+    def is_recent(self):
+        """Check if the message was sent within the last 10 minutes."""
+        from django.utils import timezone
+        return timezone.now() - self.created_at < timezone.timedelta(minutes=10)

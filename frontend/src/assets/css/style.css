@@ -323,7 +323,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 60px 0 60px 0;
+    padding: 20px 0 20px 0;
     transition: 0.5s;
 }
 
@@ -342,7 +342,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 60px 0 60px 0;
+    padding: 20px 0 20px 0;
     transition: 0.5s;
 }
 
@@ -354,6 +354,25 @@
     color: var(--bs-white);
 }
 
+.bg-breadcrumbh {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(rgba(1, 95, 201, 0.9), rgba(0, 0, 0, 0.2)), url(../img/bg-breadcrumbh.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 20px 0 20px 0;
+    transition: 0.5s;
+}
+
+.bg-breadcrumbh .breadcrumb {
+    position: relative;
+}
+
+.bg-breadcrumbh .breadcrumb .breadcrumb-item a {
+    color: var(--bs-white);
+}
+
 .bg-breadcrumbs {
     position: relative;
     overflow: hidden;
@@ -361,7 +380,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 60px 0 60px 0;
+    padding: 20px 0 20px 0;
     transition: 0.5s;
 }
 
@@ -380,7 +399,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 60px 0 60px 0;
+    padding: 20px 0 20px 0;
     transition: 0.5s;
 }
 
@@ -399,7 +418,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 60px 0 60px 0;
+    padding: 20px 0 20px 0;
     transition: 0.5s;
 }
 
@@ -418,7 +437,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 60px 0 60px 0;
+    padding: 20px 0 20px 0;
     transition: 0.5s;
 }
 
@@ -437,7 +456,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 60px 0 60px 0;
+    padding: 20px 0 20px 0;
     transition: 0.5s;
 }
 

@@ -1,25 +1,16 @@
-  <!-- Carousel Start-->
-  <div class="header-carousel owl-carousel owl-loaded owl-drag">
-    <div class="header-carousel-item bg-primary">
-      <div class="carousel-caption">
-        <div class="container">
-          <h4 class="text-white text-uppercase fw-bold">Welcome To Apnafayadaa</h4>(Be a Member and get multiple Discount, Benefit and Offers)
-          <h5 class="text-white text-uppercase fw-bold">Get Benefit on Personal Accident Insurance for our Member</h5>
-        </div>
+  <!-- Header Start -->
+      <div class="container-fluid bg-breadcrumbh">
+          <div class="container text-center py-5 wow fadeInDown" style="max-width: 900px;">
+              <h4 class="text-white display-4 mb-2" data-wow-delay="0.1s">Welcome To Apnafayadaa</h4>
+              <p style="color: #ffffff;">(Be a Member and get multiple Discount, Benefit and Offers)</p>
+              <h5 class="text-white text-uppercase fw-bold">Get Benefit on Personal Accident Insurance for our Member</h5>   
+          </div>
       </div>
-    </div>
-  </div>
-  <!-- Carousel End -->
+  <!-- Header End -->
 
-  <!-- Feature Start -->
+  <!-- Home Start -->
     <div class="container-fluid feature bg-light">
-        <div class="container py-5">
-            <!-- <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                <h4 class="text-primary">Our Services</h4>
-                <h1 class="display-4 mb-4">We Provide Best Services</h1>
-                <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur adipisci facilis cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad culpa deserunt sint dolorem autem obcaecati, ipsam mollitia hic.
-                </p>
-            </div> -->
+        <div class="container py-5">            
             <div class="row g-4">
               <div *ngFor="let group of groupedPlans | keyvalue" class="col-xl-12">
                 <h3 class="mb-3">{{ group.key }}</h3>
@@ -34,58 +25,9 @@
                     </div>
                   </div>
                 </div>
-              </div>
-                        
-                <!-- <div *ngFor="let plan of insuranceplan" class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="feature-item p-4 pt-0">
-                        <div class="feature-icon p-4 mb-4">
-                            <i class="far fa-hospital fa-3x"></i>
-                        </div>
-                        <h4 class="mb-4">{{plan.plan_name}}</h4>
-                        <p class="mb-4">{{plan.description}}
-                        </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" [routerLink]="['/planform', plan.id]">Buy Now</a>
-                    </div>
-                </div>                
-                <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
-                    <a class="btn btn-primary rounded-pill py-3 px-5" href="/service">More Services</a>
-                </div> -->
-            </div>
-        </div>
-    </div>
-  <!-- Feature End -->
+              </div>     
 
-  <!-- About Start 
-    <div class="container-fluid bg-light about pb-5">
-        <div class="container pb-5">
-            <div class="row g-5">
-                <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
-                    <div class="about-item-content bg-white rounded p-5 h-100">
-                        <h4 class="text-primary">About Our Company</h4>
-                        <p>Apnafaydaa is an individually-owned financial agent, specializing in multiple lines of insurance and financial products. We also offer a wide range of investment solutions designed for both corporates and individuals.
-                            We combine the warmth of a small-town approach with the efficiency of modern financial services. As independent facilitators, our team provides clients with multiple options tailored to their unique requirements and investment goals.
-                            Our focus is on delivering affordable and reliable financial products, insurance solutions, and investment opportunities—ensuring that every client receives the right coverage and growth options at a price they can afford.
-                        </p>                           
-                        <a class="btn btn-primary rounded-pill py-3 px-5" href="about.html">More Information</a>
-                    </div>
-                </div>
-                <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
-                    <div class="bg-white rounded p-5 h-100">
-                        <div class="row g-4 justify-content-center">
-                            <div class="col-12">
-                                <div class="rounded bg-light">
-                                    <img src="assets/img/about-2.png" class="img-fluid rounded w-100" alt="">
-                                </div>
-                            </div>                                
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-  <!-- About End -->
-     
-  <!-- Back to Top -->
-  <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top">
-    <i class="fa fa-arrow-up"></i>
-  </a>
+  <!-- Home End -->  

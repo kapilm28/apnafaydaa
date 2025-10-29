@@ -35,6 +35,8 @@ from django.middleware.csrf import get_token
 import uuid
 import hashlib
 
+from .serializers import ContactMessageSerializer
+from django.core.mail import send_mail
 from django.conf import settings
 
 from .models import Payment
@@ -445,7 +447,56 @@ class ResetPasswordView(APIView):
         user.save()
 
         return Response({"message": "✅ Password reset successful."}, status=200)
-    
+
+
+
 
 def get_csrf_token(request):
     return JsonResponse({'csrfToken': get_token(request)})
+
+
+class ContactAPIView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = ContactMessageSerializer(data=request.data)
+        if serializer.is_valid():
+            contact = serializer.save()
+
+            # Email details
+            sender = settings.EMAIL_HOST_USER
+            password = settings.EMAIL_HOST_PASSWORD
+            receiver = sender  # Send to admin or your team inbox
+
+            msg = EmailMessage()
+            msg.set_content(
+                f"""
+                <html>
+                    <body>
+                        <h3>📩 New Contact Message</h3>
+                        <p><b>Name:</b> {contact.name}</p>
+                        <p><b>Email:</b> {contact.email}</p>
+                        <p><b>Phone:</b> {contact.phone}</p>
+                        <p><b>Message:</b><br>{contact.message}</p>
+                    </body>
+                </html>
+                """,
+                subtype='html'
+            )
+            msg["Subject"] = "📞 New Contact Form Submission"
+            msg["From"] = sender
+            msg["To"] = receiver
+
+            # Use TLS for Gmail (or your SMTP host)
+            context = ssl._create_unverified_context()
+            try:
+                with smtplib.SMTP("smtp.gmail.com", 587) as server:
+                    server.starttls(context=context)
+                    server.login(sender, password)
+                    server.send_message(msg)
+                return Response({"message": "✅ Message sent successfully!"}, status=status.HTTP_200_OK)
+            except Exception as e:
+                print(f"[ERROR] Email send failed: {e}")
+                return Response({"error": "Message saved but failed to send email."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
