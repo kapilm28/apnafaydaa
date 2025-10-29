@@ -265,7 +265,7 @@
 
 /*** Carousel Hero Header Start ***/
 .header-carousel .header-carousel-item {
-    height: 400px;
+    height: 200px;
 }
 
 .header-carousel .owl-nav .owl-prev,
@@ -311,36 +311,6 @@
     background: rgba(0, 0, 0, .2);
     display: flex;
     align-items: center;
-}
-
-@media (max-width: 991px) {
-    .header-carousel .header-carousel-item .carousel-caption {
-        padding-top: 45px;
-    }
-
-    .header-carousel .header-carousel-item {
-        height: 1100px;
-    }
-}
-
-@media (max-width: 767px) {
-    .header-carousel .header-carousel-item {
-        height: 750px;
-    }
-
-    .header-carousel .owl-nav .owl-prev {
-        bottom: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-left: -45px;
-    }
-
-    .header-carousel .owl-nav .owl-next {
-        bottom: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-        margin-left: 45px;
-    }
 }
 /*** Carousel Hero Header End ***/
 
